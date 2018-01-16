@@ -43,7 +43,8 @@
 
       this.calculateStrikeRate = function (runs, balls){
         this.strikeRate = runs *100 / balls ;
-        console.log('strikeRate : ' + this.strikeRate);
+        this.strikeRate = this.strikeRate.toFixed(2);
+        // console.log('strikeRate : ' + this.strikeRate);
       };
   }
 

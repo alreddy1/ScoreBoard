@@ -51,6 +51,7 @@
 
       <div class="col-md-6" ng-controller="TeamBCtrl as teamB">
         <h5>Australia</h5>
+        <!-- <p>{{teamB.myTeam[1].name}}</p> -->
         <table class="table table-sm table-hover">
           <thead>
             <tr>
@@ -65,6 +66,7 @@
             </tr>
           </tbody>
         </table>
+
       </div>
     </div>
   </div>
@@ -112,10 +114,9 @@
       <p>V Sehwag : </p> -->
     </div>
     <hr>
-    <p>Current over details:</p>
-
     <div class="container">
-      <div class="row">
+      <div class="row" ng-show="bowl.currentOverDetails">
+        <span>Current over details:</span>
         <div class="col-md-1">
             <select ng-model="bowl.extraRun">
               <option value="" disabled>Extra's</option>
@@ -142,8 +143,31 @@
           <button class="btn btn-sm btn-warning" ng-show="bowl.showOver" ng-click="bowl.overCompleted()">Over</button>
           <button class="btn btn-success btn-sm" ng-hide="bowl.showOver" ng-click="bowl.overDetails(bowl.runsScored,bowl.extraRun); bat.batsmanDetails(bat.runsScored,bat.extraRun)">Ok</button>
         </div>
-
-
+      </div>
+      <hr>
+      <div ng-show="bowl.showBowler">
+        <p>Select another bowler:</p>
+        <div class="row">
+          <div class="col-md-2 md-auto">
+            <select id="selectBowler" ng-model="bowl.newBowler">
+              <option value="">Select</option>
+              <option value={{bowl.myTeamB[0].name}} ng-hide="bowl.myTeamB[0].name == bowl.currentBowler">{{bowl.myTeamB[0].name}}</option>
+              <option value={{bowl.myTeamB[1].name}} ng-hide="bowl.myTeamB[1].name == bowl.currentBowler">{{bowl.myTeamB[1].name}}</option>
+              <option value={{bowl.myTeamB[2].name}} ng-hide="bowl.myTeamB[2].name == bowl.currentBowler">{{bowl.myTeamB[2].name}}</option>
+              <option value={{bowl.myTeamB[3].name}} ng-hide="bowl.myTeamB[3].name == bowl.currentBowler">{{bowl.myTeamB[3].name}}</option>
+              <option value={{bowl.myTeamB[4].name}} ng-hide="bowl.myTeamB[4].name == bowl.currentBowler">{{bowl.myTeamB[4].name}}</option>
+              <option value={{bowl.myTeamB[5].name}} ng-hide="bowl.myTeamB[5].name == bowl.currentBowler">{{bowl.myTeamB[5].name}}</option>
+              <option value={{bowl.myTeamB[6].name}} ng-hide="bowl.myTeamB[6].name == bowl.currentBowler">{{bowl.myTeamB[6].name}}</option>
+              <option value={{bowl.myTeamB[7].name}} ng-hide="bowl.myTeamB[7].name == bowl.currentBowler">{{bowl.myTeamB[7].name}}</option>
+              <option value={{bowl.myTeamB[8].name}} ng-hide="bowl.myTeamB[8].name == bowl.currentBowler">{{bowl.myTeamB[8].name}}</option>
+              <option value={{bowl.myTeamB[9].name}} ng-hide="bowl.myTeamB[9].name == bowl.currentBowler">{{bowl.myTeamB[9].name}}</option>
+              <option value={{bowl.myTeamB[10].name}} ng-hide="bowl.myTeamB[10].name == bowl.currentBowler">{{bowl.myTeamB[10].name}}</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-success btn-sm" value="Reset" ng-click="bowl.changeBowler(bowl.newBowler) ; bowl.reset()">Ok</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -151,7 +175,7 @@
 
     <hr>
 
-    <h6>Bowler :</h6>
+    <h6>Bowler : {{bowl.newBowler}}</h6>
     <hr>
     <div class="container" id="bowing-details">
       <ol class="colletcion">
@@ -192,23 +216,6 @@
 
     </div>
 
-    <div class="container">
-      <h5>Select another bowler</h5>
-      <div class="row">
-        <div class="col-md-2 md-auto">
-          <select ng-model="bowl.runsScored" ng-change="bat.runsScored = bowl.runsScored">
-            <option value="" ng-repeat="ball in bowl.runsScoredInThisOver track by $index"  >Bowler</option>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4" >4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select>
-        </div>
-      </div>
-    </div>
 
   </div>
 </body>

@@ -3,7 +3,7 @@
   app.service("TeamBSvc", TeamBDetails);
 
   function TeamBDetails(){
-    console.log('TeamASvc.TeamADetails');
+    // console.log('TeamASvc.TeamADetails');
     this.myTeam = [ {'name': "M Hayden"},
                     {'name': "G Christ (Wk)"},
                     {'name': "R Ponting (C)"},
