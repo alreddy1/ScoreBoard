@@ -2,7 +2,7 @@
   var app = angular.module("scoreBoard");
   app.controller("BowlingCtrl", BowlingCtrl);
 
-  function BowlingCtrl(TeamBSvc) {
+  function BowlingCtrl(TeamBSvc, BowlingSvc) {
       // console.log("Please select a Bowler...!");
       this.bowler ="";
       this.totalScore = 0;
@@ -13,6 +13,7 @@
       this.runsScoredInThisOver = [];
       this.showOver = false;
       this.myTeamB = TeamBSvc.myTeam;
+      this.anotherSvc = BowlingSvc.myTeam;
 
       this.overDetails = function(runs, extras){
         this.runsScored = parseInt(runs);
