@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scoreBoard">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Score Board</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="angular.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers/battingCtrl.controller.js"></script>
+  <script src="controllers/bowlingCtrl.controller.js"></script>
+  <script src="controllers/teamACtrl.controller.js"></script>
+  <script src="controllers/teamBCtrl.controller.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row py-5">
+      <h3>IND vs AUS
+                <small class="text-muted">ODI</small>
+            </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-6" ng-controller="TeamACtrl as teamA">
+        <h5>India</h5>
+        <table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="player in  teamA.myTeam | limitTo : teamA.limitValue">
+            <tr>
+              <td>{{$index+1}}</td>
+              <td>{{player.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-6" ng-controller="TeamBCtrl as teamB">
+        <h5>Australia</h5>
+        <table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="player in  teamB.myTeam | limitTo : teamB.limitValue">
+            <tr>
+              <td>{{$index+1}}</td>
+              <td>{{player.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container" ng-controller="BowlingCtrl as bowl">
+    <h4>Total Score: </h4>
+    <div ng-controller="BattingCtrl as bat">
+    <h2 class="d-inline">{{bowl.totalScore}} </h2>
+    <h2 class="d-inline">- {{bowl.wicketsFallen}}</h2>
+    <h4 class="d-inline">({{bowl.oversCompletted}} Overs)</h4>
+    <h6>Batting </h6>
+    <div class="container" >
+      <table class="table tabel-sm table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>player</th>
+            <th>Runs</th>
+            <th>Balls</th>
+            <th>Strike Rate</th>
+            <th>4's</th>
+            <th>6's</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Sachin</td>
+            <td>{{bat.batsmanRuns}}</td>
+            <td>{{bat.ballsFaced}}</td>
+            <td>{{bat.strikeRate}}</td>
+            <td>{{bat.foursHit}}</td>\
+            <td>{{bat.sixesHit}}</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Sehwag</td>
+
+          </tr>
+        </tbody>
+      </table>
+      <!-- <p>S Tendulkar : {{bowl.firstBall}}</p>
+      <p>V Sehwag : </p> -->
+    </div>
+    <hr>
+    <p>Current over details:</p>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+            <select ng-model="bowl.extraRun">
+              <option value="" disabled>Extra's</option>
+              <option value="Wd">Wide</option>
+              <option value="B">Bye</option>
+              <option value="LB">Leg Bye</option>
+              <option value="NB">No Ball</option>
+              <option value="Out">Wicket</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+              <select ng-model="bowl.runsScored" ng-change="bat.runsScored = bowl.runsScored">
+              <option value="" disabled >Runs</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" >4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-sm btn-warning" ng-show="bowl.showOver" ng-click="bowl.overCompleted()">Over</button>
+          <button class="btn btn-success btn-sm" ng-hide="bowl.showOver" ng-click="bowl.overDetails(bowl.runsScored,bowl.extraRun); bat.batsmanDetails(bat.runsScored,bat.extraRun)">Ok</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+    <hr>
+
+    <h6>Bowler :</h6>
+    <hr>
+    <div class="container" id="bowing-details">
+      <ol class="colletcion">
+        <li class="collection-items" ng-repeat="ball in bowl.runsScoredInThisOver track by $index">
+          {{ball}}
+        </li>
+      </ol>
+
+        <table class="table tabel-sm table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Bowler</th>
+              <th>Overs</th>
+              <th>Maidens</th>
+              <th>Runs</th>
+              <th>Wickets</th>
+              <th>Avg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Bret Lee</td>
+              <td>{{bowl.oversCompletted}}</td>
+              <td>{{bowl.maiden}}</td>
+              <td>{{bowl.totalScoreInThisOver}}</td>
+              <td>{{bowl.wicketsFallen}}</td>
+              <td>{{bowl.avg}}</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Mc Grath</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
