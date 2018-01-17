@@ -3,21 +3,60 @@
   app.controller("BowlingCtrl", BowlingCtrl);
 
   function BowlingCtrl(TeamBSvc, BowlingSvc) {
-      // console.log("Please select a Bowler...!");
+
       this.bowler ="";
       this.totalScore = 0;
       this.wicketsFallen = 0;
+      this.maiden = 0;
       this.ballCount = 0;
       this.oversCount = 0;
-      this.oversCompletted = 0.0;
+      this.oversCompletted = 0;
       this.runsScoredInThisOver = [];
       this.showOver = false;
+      this.currentOverDetails = false;
+      this.showBowler = true;
+      this.showOpeningBatsman = true;
+      this.showNextBatsman = false;
       this.myTeamB = TeamBSvc.myTeam;
-      this.anotherSvc = BowlingSvc.myTeam;
+      this.bowlerStatsDetails = BowlingSvc.bowlerDetails();
+
+      this.showBatsman = function(){
+        this.showOpeningBatsman = false;
+      }
+
+      this.setNextBatsmanInd = function (){
+        this.showNextBatsman = false;
+      }
+
+      this.changeBowler = function (bowler){
+        this.bowler = bowler;
+        console.log('New Bowler : '+this.bowler);
+        this.currentBowler = this.bowler;
+        this.showBowler = false;
+        this.currentOverDetails = true;
+      }
+
+      this.selectBatsman = function () {
+        console.log('Selecting a new batsman');
+      }
+
+      this.selectBowler = function () {
+        console.log('Selecting a new bowler');
+      }
+
+      this.overCompleted = function (){
+          console.log('Please select another bowler..!');
+          this.bowler=!this.bowler;
+          // this.bowler=this.newBowler;
+          this.ballCount = 0;
+          this.showOver = false;
+          this.showBowler = true;
+          this.currentOverDetails = false;
+      }
 
       this.overDetails = function(runs, extras){
         this.runsScored = parseInt(runs);
-        // console.log("bowl runsScored: "+ typeof(this.runsScored)) ;
+        console.log("overDetails clicked..!: ") ;
         this.extraRun = extras;
         if (this.extraRun === 'NB') {
             this.runConcededOnNoBall =this.runsScored + 1;
@@ -25,7 +64,6 @@
             // console.log("Runs scored with No-Ball!--> runs : " +this.runConcededOnNoBall);
             this.totalScore += this.runConcededOnNoBall;
             // console.log("total score :" +this.totalScore);
-
             // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extraRun === 'Wd') {
           this.runConcededOnWideBall =this.runsScored + 1;
@@ -33,7 +71,6 @@
             // console.log("Runs scored on Wide delivery! --> extras :" +this.runConcededOnWideBall);
             this.totalScore += this.runConcededOnWideBall;
             // console.log("total score :" +this.totalScore);
-
             // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extraRun === 'LB') {
             this.runConcededWithLegByes =this.runsScored;
@@ -61,16 +98,18 @@
           // console.log('Ball Count : ' +this.ballCount );
           this.wicketsFallen += 1;
           // console.log('Please select another batsman..!');
+          this.showNextBatsman = true;
           this.selectBatsman();
         }else {
           this.totalScore += this.runsScored;
           this.runsScoredInThisOver.push(this.runsScored);
-          // console.log("Runs scored --> Runs :" +this.totalScore);
+          console.log("Runs scored :" +this.totalScore);
           this.ballCount += 0.1;
           // console.log('Ball Count : ' +this.ballCount );
         }
 
         this.overStas(this.runsScored, this.extraRun);
+
         this.extraRun = "";
         this.runsScored = 0;
 
@@ -78,31 +117,11 @@
           this.showOver = true;
           this.oversCount += 1.0;
           this.ballCount = 0.0;
-          // this.selectBowler();
         }
 
         this.oversCompletted = this.oversCount + this.ballCount;
         this.oversCompletted = this.oversCompletted.toFixed(1);
 
-      }
-
-      this.selectBatsman = function () {
-        alert('Selecting a new batsman');
-      }
-
-      this.selectBowler = function () {
-        console.log('Selecting a new bowler');
-      }
-
-      this.currentOverDetails = true;
-      this.overCompleted = function (){
-          console.log('Please select another bowler..!');
-          this.bowler=!this.bowler;
-          // this.bowler=this.newBowler;
-          this.ballCount = 0;
-          this.showOver = false;
-          this.showBowler = true;
-          this.currentOverDetails = false;
       }
 
       this.totalScoreInThisOver = 0;
@@ -117,7 +136,6 @@
             this.totalScoreInThisOver += this.runGivenOnNoBall;
             // console.log("total score :" +this.totalScoreInThisOver);
             // console.log('Ball Count : ' +this.ballCount );
-
         } else if (this.extrasGivenOnThisDelivery === 'Wd') {
           this.runGivenOnWideBall =this.runsScoredOnThisDelivery + 1;
           // this.runsScoredInThisOver.push(this.runConcededOnWideBall);
@@ -125,7 +143,6 @@
             this.totalScoreInThisOver += this.runGivenOnWideBall;
             // console.log("total score :" +this.totalScoreInThisOver);
             // console.log('Ball Count : ' +this.ballCount );
-
         } else if (this.extrasGivenOnThisDelivery === 'LB') {
             this.runGivenWithLegByes =this.runsScoredOnThisDelivery;
             // this.runsScoredInThisOver.push(this.runConcededWithLegByes);
@@ -142,13 +159,12 @@
           // console.log("total score :" +this.totalScoreInThisOver);
           // this.ballCount += 0.1;
           // console.log('Ball Count : ' +this.ballCount );
-
         }else if (this.extrasGivenOnThisDelivery === 'Out') {
           this.runGivenOnThisDelivery = this.runsScoredOnThisDelivery;
           // this.runsScoredInThisOver.push(this.runConceded);
           // console.log("Runs scored runGivenOnThisDelivery()! --> extras :" +this.runGivenOnThisDelivery);
           this.totalScoreInThisOver += this.runGivenOnThisDelivery;
-          // console.log("total score :" +this.totalScoreInThisOver);
+          console.log("total score :" +this.totalScoreInThisOver);
           // this.ballCount += 0.1;
           // console.log('Ball Count : ' +this.ballCount );
           // this.wicketsFallen += 1;
@@ -158,13 +174,12 @@
           // console.log('runsScoredOnThisDelivery '+this.runsScoredOnThisDelivery);
           // console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
           this.totalScoreInThisOver += this.runsScoredOnThisDelivery;
-          // console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
+          console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
           // this.runsScoredInThisOver.push(this.runsScored);
           // console.log("Runs scored --> Runs :" +this.totalScoreInThisOver);
           // this.ballCount += 0.1;
           // console.log('Ball Count : ' +this.ballCount );
         }
-
         this.average(this.totalScoreInThisOver, this.oversCompletted);
       }
 
@@ -173,14 +188,6 @@
         this.avg = this.avg.toFixed(2);
       }
 
-      this.changeBowler = function (bowler){
-        this.bowler = bowler;
-        console.log('New Bowler : '+this.bowler);
-        this.currentBowler = this.bowler;
-        this.showBowler = false;
-        this.currentOverDetails = true;
-
-      }
       // this.dropDown = "";
       this.reset = function (){
         // console.log('reset logged');

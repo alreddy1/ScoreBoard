@@ -2,30 +2,39 @@
   var app = angular.module("scoreBoard");
   app.controller("BattingCtrl", BattingCtrl);
 
-  function BattingCtrl() {
+  function BattingCtrl(TeamASvc) {
       // console.log("Please select a Striker...!");
-      this.striker="";
+      // this.striker="";
       // console.log("Please select a Non-Striker...!");
-      this.nonStriker="";
+      // this.nonStriker="";
+      this.myTeamA = TeamASvc.myTeam;
 
-      if((this.runsScored==="odd" && !this.lastBall)|| (this.runsScored==="even" && this.lastBall)) {
-          this.striker = this.nonStriker;
-      } else{
-          this.striker = this.striker;
+      this.striker = function (batsman){
+        this.striker = batsman;
+        console.log('Striker : '+this.striker);
       }
+      this.nonStriker = function (batsman){
+        this.nonStriker = batsman;
+        console.log('Non Striker : '+this.nonStriker);
+      }
+
+      // if((this.runsScored === "odd" && !this.lastBall)|| (this.runsScored === "even" && this.lastBall)) {
+      //     this.striker = this.nonStriker;
+      // } else{
+      //     this.striker = this.striker;
+      // }
 
       this.batsmanRuns = 0;
       this.ballsFaced = 0;
-      this.strikeRate = 0;
       this.foursHit = 0;
       this.sixesHit = 0;
       this.strikeRate = 0;
 
       this.batsmanDetails = function (runs, extras) {
+        // console.log('batsmanDetails clicked..!');
         this.runsScored = parseInt(runs);
         this.extraRun = parseInt(extras);
-        // console.log(this.runsScored === 4);
-        // console.log(this.runsScored === 6);
+        // console.log(this.runsScored);
         if(this.runsScored === 4){
           this.foursHit += 1;
           // console.log(this.foursHit);
