@@ -8,14 +8,30 @@
       // console.log("Please select a Non-Striker...!");
       // this.nonStriker="";
       this.myTeamA = TeamASvc.myTeam;
+      this.notAvailableBatsman = [];
 
       this.striker = function (batsman){
-        this.striker = batsman;
-        console.log('Striker : '+this.striker);
+        this.batsman1 = batsman;
+        console.log('Striker : '+this.batsman1);
+        this.notAvailableBatsman.push({name: this.batsman1, disabled: true});
+        console.log('Outed: '+this.notAvailableBatsman[2].name +" " +this.notAvailableBatsman[2].disabled);
+        // this.disableStriker = true ;
       }
       this.nonStriker = function (batsman){
-        this.nonStriker = batsman;
-        console.log('Non Striker : '+this.nonStriker);
+        this.batsman2 = batsman;
+        console.log('Non Striker : '+this.batsman2);
+        this.notAvailableBatsman.push(this.batsman2);
+        console.log('Outed: '+this.notAvailableBatsman );
+      }
+
+      this.indexOfBatsman = 0;
+      this.isAvailableBatsman = function (batsman){
+        this.indexOfBatsman = this.notAvailableBatsman.indexOf(batsman);
+        // console.log('In isAvailableBatsman()');
+          if (this.indexOfBatsman === -1)
+            return false;
+          else
+            return true;
       }
 
       // if((this.runsScored === "odd" && !this.lastBall)|| (this.runsScored === "even" && this.lastBall)) {

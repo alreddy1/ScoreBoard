@@ -108,6 +108,8 @@
           // console.log('Ball Count : ' +this.ballCount );
         }
 
+        console.log('Next batsman: '+this.showNextBatsman);
+
         this.overStas(this.runsScored, this.extraRun);
 
         this.extraRun = "";

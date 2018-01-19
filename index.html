@@ -28,6 +28,18 @@
 </head>
 
 <body>
+  <!-- <div ng-controller="TestCtrl as tests">
+    ngOptions:
+    <select ng-model="tests.selected" ng-options="test as test.name disable when test.disabled==true for test in tests.objects">
+    </select>
+    {{tests.selected.name}}
+  </div>
+  <div ng-controller="TestCtrl as tests">
+      <select ng-model="tests.selected" ng-options="test as test.name for test in tests.list">
+      </select>
+      {{tests.selected.name}}
+  </div> -->
+
   <div class="container">
     <div class="row py-5">
       <div class="col-md-3"></div>
@@ -110,8 +122,8 @@
             <div class="col-md-3"></div>
             <div class="col-md-6 ">
               <div class="card">
-                <div class="card-header">
-                  <h5 class="text-center">Select opening batsman</h5>
+                <div class="card-header bg-success">
+                  <h5 class="text-center text-white">Select opening batsman</h5>
                 </div>
                 <div class="card-body">
                   <div class="row">
@@ -119,35 +131,35 @@
                       <h5>Select Striker:</h5>
                       <select id="selectStriker" class="d-inline" ng-model="bat.batsman">
                         <option value="">Select</option>
-                        <option value={{bat.myTeamA[0].name}} ng-hide="bat.myTeamA[0].name == bat.currentbater">{{bat.myTeamA[0].name}}</option>
-                        <option value={{bat.myTeamA[1].name}} ng-hide="bat.myTeamA[1].name == bat.currentbater">{{bat.myTeamA[1].name}}</option>
-                        <option value={{bat.myTeamA[2].name}} ng-hide="bat.myTeamA[2].name == bat.currentbater">{{bat.myTeamA[2].name}}</option>
-                        <option value={{bat.myTeamA[3].name}} ng-hide="bat.myTeamA[3].name == bat.currentbater">{{bat.myTeamA[3].name}}</option>
-                        <option value={{bat.myTeamA[4].name}} ng-hide="bat.myTeamA[4].name == bat.currentbater">{{bat.myTeamA[4].name}}</option>
-                        <option value={{bat.myTeamA[5].name}} ng-hide="bat.myTeamA[5].name == bat.currentbater">{{bat.myTeamA[5].name}}</option>
-                        <option value={{bat.myTeamA[6].name}} ng-hide="bat.myTeamA[6].name == bat.currentbater">{{bat.myTeamA[6].name}}</option>
-                        <option value={{bat.myTeamA[7].name}} ng-hide="bat.myTeamA[7].name == bat.currentbater">{{bat.myTeamA[7].name}}</option>
-                        <option value={{bat.myTeamA[8].name}} ng-hide="bat.myTeamA[8].name == bat.currentbater">{{bat.myTeamA[8].name}}</option>
-                        <option value={{bat.myTeamA[9].name}} ng-hide="bat.myTeamA[9].name == bat.currentbater">{{bat.myTeamA[9].name}}</option>
-                        <option value={{bat.myTeamA[10].name}} ng-hide="bat.myTeamA[10].name == bat.currentbater">{{bat.myTeamA[10].name}}</option>
+                        <option value={{bat.myTeamA[0].name}} ng-hide="">{{bat.myTeamA[0].name}}</option>
+                        <option value={{bat.myTeamA[1].name}} ng-hide="">{{bat.myTeamA[1].name}}</option>
+                        <option value={{bat.myTeamA[2].name}} ng-hide="">{{bat.myTeamA[2].name}}</option>
+                        <option value={{bat.myTeamA[3].name}} ng-hide="">{{bat.myTeamA[3].name}}</option>
+                        <option value={{bat.myTeamA[4].name}} ng-hide="">{{bat.myTeamA[4].name}}</option>
+                        <option value={{bat.myTeamA[5].name}} ng-hide="">{{bat.myTeamA[5].name}}</option>
+                        <option value={{bat.myTeamA[6].name}} ng-hide="">{{bat.myTeamA[6].name}}</option>
+                        <option value={{bat.myTeamA[7].name}} ng-hide="">{{bat.myTeamA[7].name}}</option>
+                        <option value={{bat.myTeamA[8].name}} ng-hide="">{{bat.myTeamA[8].name}}</option>
+                        <option value={{bat.myTeamA[9].name}} ng-hide="">{{bat.myTeamA[9].name}}</option>
+                        <option value={{bat.myTeamA[10].name}} ng-hide="">{{bat.myTeamA[10].name}}</option>
                       </select>
                       <button class="btn btn-success btn-sm" ng-click="bat.striker(bat.batsman)">Ok</button>
                     </div>
                     <div class="col-md-6">
                       <h5>Select Non-Striker:</h5>
-                      <select id="selectNonStriker" class="d-inline" ng-model="bat.batsman2">
-                        <option value="">Select</option>
-                        <option value={{bat.myTeamA[0].name}} ng-hide="bat.myTeamA[0].name == bat.currentbater">{{bat.myTeamA[0].name}}</option>
-                        <option value={{bat.myTeamA[1].name}} ng-hide="bat.myTeamA[1].name == bat.currentbater">{{bat.myTeamA[1].name}}</option>
-                        <option value={{bat.myTeamA[2].name}} ng-hide="bat.myTeamA[2].name == bat.currentbater">{{bat.myTeamA[2].name}}</option>
-                        <option value={{bat.myTeamA[3].name}} ng-hide="bat.myTeamA[3].name == bat.currentbater">{{bat.myTeamA[3].name}}</option>
-                        <option value={{bat.myTeamA[4].name}} ng-hide="bat.myTeamA[4].name == bat.currentbater">{{bat.myTeamA[4].name}}</option>
-                        <option value={{bat.myTeamA[5].name}} ng-hide="bat.myTeamA[5].name == bat.currentbater">{{bat.myTeamA[5].name}}</option>
-                        <option value={{bat.myTeamA[6].name}} ng-hide="bat.myTeamA[6].name == bat.currentbater">{{bat.myTeamA[6].name}}</option>
-                        <option value={{bat.myTeamA[7].name}} ng-hide="bat.myTeamA[7].name == bat.currentbater">{{bat.myTeamA[7].name}}</option>
-                        <option value={{bat.myTeamA[8].name}} ng-hide="bat.myTeamA[8].name == bat.currentbater">{{bat.myTeamA[8].name}}</option>
-                        <option value={{bat.myTeamA[9].name}} ng-hide="bat.myTeamA[9].name == bat.currentbater">{{bat.myTeamA[9].name}}</option>
-                        <option value={{bat.myTeamA[10].name}} ng-hide="bat.myTeamA[10].name == bat.currentbater">{{bat.myTeamA[10].name}}</option>
+                      <select id="selectNonStriker" class="d-inline" ng-model="bat.batsman2" ng-options="test as test.name disable when test.disabled==true for test in bat.notAvailableBatsman">
+                        <!-- <option value="">Select</option>
+                        <option value={{bat.myTeamA[0].name}} ng-show="bat.isAvailableBatsman(bat.batsman1)">{{bat.myTeamA[0].name}}</option>
+                        <option value={{bat.myTeamA[1].name}} ng-hide="bat.myTeamA[1].name == bat.batsman1">{{bat.myTeamA[1].name}}</option>
+                        <option value={{bat.myTeamA[2].name}} ng-hide="bat.myTeamA[2].name == bat.batsman1">{{bat.myTeamA[2].name}}</option>
+                        <option value={{bat.myTeamA[3].name}} ng-hide="bat.myTeamA[3].name == bat.batsman1">{{bat.myTeamA[3].name}}</option>
+                        <option value={{bat.myTeamA[4].name}} ng-hide="bat.myTeamA[4].name == bat.batsman1">{{bat.myTeamA[4].name}}</option>
+                        <option value={{bat.myTeamA[5].name}} ng-hide="bat.myTeamA[5].name == bat.batsman1">{{bat.myTeamA[5].name}}</option>
+                        <option value={{bat.myTeamA[6].name}} ng-hide="bat.myTeamA[6].name == bat.batsman1">{{bat.myTeamA[6].name}}</option>
+                        <option value={{bat.myTeamA[7].name}} ng-hide="bat.myTeamA[7].name == bat.batsman1">{{bat.myTeamA[7].name}}</option>
+                        <option value={{bat.myTeamA[8].name}} ng-hide="bat.myTeamA[8].name == bat.batsman1">{{bat.myTeamA[8].name}}</option>
+                        <option value={{bat.myTeamA[9].name}} ng-hide="bat.myTeamA[9].name == bat.batsman1">{{bat.myTeamA[9].name}}</option>
+                        <option value={{bat.myTeamA[10].name}} ng-hide="bat.myTeamA[10].name == bat.batsman1">{{bat.myTeamA[10].name}}</option> -->
                       </select>
                       <button class="btn btn-success btn-sm" ng-click="bat.nonStriker(bat.batsman2)">Ok</button>
                     </div>
@@ -174,8 +186,8 @@
             <div class="col-md-4">
               <br>
               <div class="card">
-                <div class="card-header">
-                  <h5 class="text-center">Select Next Batsman</h5>
+                <div class="card-header bg-success">
+                  <h5 class="text-center text-white">Select Next Batsman</h5>
                 </div>
                 <div class="card-body">
                   <p>Select Next Batsman:</p>
@@ -209,8 +221,8 @@
           <div class="col-md-3"></div>
           <div class="col-md-6">
             <div class="card">
-              <div class="card-header">
-                <h4 class="text-center py-1">Total Score: </h4>
+              <div class="card-header bg-success">
+                <h4 class="text-center text-white">Total Score: </h4>
               </div>
               <div class="card-body">
                 <div class="card text-center">
@@ -231,8 +243,8 @@
           <div class="col-md-2"></div>
           <div class="col-md-8">
             <div class="card">
-              <div class="card-header">
-                <h5 class="text-center">Batting </h5>
+              <div class="card-header bg-success">
+                <h5 class="text-center text-white">Batting </h5>
               </div>
               <div class="card-body">
                 <table class="table tabel-sm table-hover">
@@ -363,8 +375,8 @@
               <div class="col-md-4"></div>
               <div class="col-md-4">
                 <div class="card">
-                  <div class="card-header">
-                    <h5 class="text-center">Current over details </h5>
+                  <div class="card-header bg-success">
+                    <h5 class="text-center text-white">Current over details </h5>
                   </div>
                   <div class="card-body">
                     <h5 class="d-inline">This Over:</h5>
@@ -402,8 +414,8 @@
           <div class="col-md-3"></div>
           <div class="col-md-6">
             <div class="card">
-              <div class="card-header">
-                <h5 class="text-center">Select bowler</h5>
+              <div class="card-header bg-success">
+                <h5 class="text-center text-white">Select bowler</h5>
               </div>
               <div class="card-body">
                 <h5 class="d-inline">Select bowler : </h5>
@@ -434,8 +446,8 @@
           <div class="col-md-4"></div>
           <div class="col-md-4">
             <div class="card">
-              <div class="card-header">
-                <h6 class="text-center">Bowler : {{bowl.newBowler}}</h6>
+              <div class="card-header bg-success">
+                <h6 class="text-center text-white">Bowler : {{bowl.newBowler}}</h6>
               </div>
               <div class="card-body">
                 <ol class="colletcion">
@@ -455,8 +467,8 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
               <div class="card">
-                <div class="card-header">
-                  <h4 class="text-center">Bowling</h4>
+                <div class="card-header bg-success">
+                  <h4 class="text-center text-white">Bowling</h4>
                 </div>
                 <div class="card-body">
                   <table class="table tabel-sm table-hover" id="bowlerInfo">
