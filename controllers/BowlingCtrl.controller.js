@@ -18,16 +18,41 @@
       this.showOpeningBatsman = true;
       this.showNextBatsman = false;
       // this.myTeamB = TeamBSvc.myTeam;
+      this.setTheDetails = true;
       this.myTeamB = TeamSvc.myTeamB;
       this.bowlerStatsDetails = BowlingSvc.bowlerDetails();
 
+      // this.hasWide = false;
+      // this.hasNoBall = false;
+      // this.hasBye = false;
+      // this.hasLegBye = false;
+
       this.showStart = true;
-      this.start = function(){
-        console.log('start clicked');
+      this.showSetDetails = true;
+      this.setDetails = function(maxOvers, hasWide, hasNoBall, hasBye, hasLegBye, defaultTeamA, defaultTeamB){
+        this.maxOvers = maxOvers;
+        console.log('maxOvers : '+this.maxOvers);
+        this.hasWide = hasWide;
+        console.log('Wide : '+this.hasWide);
+        this.hasNoBall = hasNoBall;
+        console.log('hasNoBall : '+this.hasNoBall);
+        this.hasBye = hasBye;
+        console.log('hasBye : '+this.hasBye);
+        this.hasLegBye = hasLegBye;
+        console.log('hasLegBye : '+this.hasLegBye);
+        //set Default Team if not entered.
+
+
+
+        this.showSetDetails = false;
+      }
+      this.startScoreBoard = function(){
+        console.log('Set Details clicked');
         this.showStart = false;
       }
       this.showBatsman = function(){
         this.showOpeningBatsman = false;
+        console.log('Next batsman ind: '+this.showNextBatsman);
       }
 
       this.setNextBatsmanInd = function (){
@@ -105,6 +130,7 @@
           this.wicketsFallen += 1;
           // console.log('Please select another batsman..!');
           this.showNextBatsman = true;
+          console.log('Next batsman ind: '+this.showNextBatsman);
           this.selectBatsman();
         }else {
           this.totalScore += this.runsScored;

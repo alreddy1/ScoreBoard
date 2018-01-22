@@ -3,39 +3,20 @@
   app.controller("BattingCtrl", BattingCtrl);
 
   function BattingCtrl(TeamSvc) {
-      // console.log("Please select a Striker...!");
       // this.striker="";
-      // console.log("Please select a Non-Striker...!");
       // this.nonStriker="";
       this.myTeamA = TeamSvc.myTeamA;
       // this.myTeamA = TeamASvc.myTeam;
       this.availableBatsman = TeamSvc.myTeamA;
       // this.availableBatsman = TeamASvc.myTeam;
-
+      
       this.striker = function (batsman){
-        this.batsman1 = batsman;
-        console.log('Striker : '+this.batsman1);
-        this.notAvailableBatsman.push({name: this.batsman1, disabled: true});
-        console.log('Outed: '+this.notAvailableBatsman[2].name +" " +this.notAvailableBatsman[2].disabled);
-        // this.disableStriker = true ;
+        this.batsman = batsman;
+        this.index = this.availableBatsman.indexOf(this.batsman);
+        console.log('After: '+this.availableBatsman[this.index].available);
+        this.availableBatsman[this.index].available = false;
+        console.log(this.availableBatsman[this.index].name +' '+this.availableBatsman[this.index].available);
 
-
-      }
-      this.nonStriker = function (batsman){
-        this.batsman2 = batsman;
-        console.log('Non Striker : '+this.batsman2);
-        this.notAvailableBatsman.push(this.batsman2);
-        console.log('Outed: '+this.notAvailableBatsman );
-      }
-
-      this.indexOfBatsman = 0;
-      this.isAvailableBatsman = function (batsman){
-        this.indexOfBatsman = this.notAvailableBatsman.indexOf(batsman);
-        // console.log('In isAvailableBatsman()');
-          if (this.indexOfBatsman === -1)
-            return false;
-          else
-            return true;
       }
 
       // if((this.runsScored === "odd" && !this.lastBall)|| (this.runsScored === "even" && this.lastBall)) {

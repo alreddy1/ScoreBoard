@@ -35,62 +35,114 @@
 
 <!-- BowlingCtrl starts here -->
   <div class="container" ng-controller="BowlingCtrl as bowl">
-<!-- BattingCtrl starts here -->
-    <div ng-controller="BattingCtrl as bat">
 
-      <!-- <div class="col-md-3 col-sm-6 col-centered text-center">
-          <img class="rounded-circle" src="../assets/img/god/saibaba.jpg" alt="Generic placeholder image" width="140" height="140">
-          <h2>Sai Baba</h2>
-          <p>Temple3</p>
-          <button class="btn btn-warning" data-toggle="modal" data-target="#myModal-Sai">View details &raquo;</button>
-      </div> -->
-
-
-      <div class="row" ng-show="bowl.showStart">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 py-2">
-          <img class="rounded-circle py-2" src="./img/birthday.jpg" alt="#" width="280" height="250">
-          <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal-Sai">Lets Start..! &raquo;</button>
-          <!-- <button class="btn btn-block btn-primary" ng-click="bowl.start()">
-            <h4 class="text-white">Start</h4>
-          </button> -->
-        </div>
-        <div class="col-md-4"></div>
+    <div class="row" ng-show="bowl.showStart">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 py-2">
+        <img class="rounded-circle py-2" src="./img/msd-2011.jpg" alt="#" width="330" height="320">
+        <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal-Sai">Lets Start..! &raquo;</button>
       </div>
+      <div class="col-md-4"></div>
+    </div>
 
-      <div class="modal" id="myModal-Sai">
-        <div class="modal-dialog">
-            <div class="modal-content bg-warning">
-            <div class="modal-header text-center">
-              <h5 class="modal-title text-center">Welcome to ScoreBoard</h5>
-              <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title text-center">
-                    <h5>Please Enetr the details..!</h5>
+    <div class="modal" id="myModal-Sai">
+      <div class="modal-dialog">
+          <div class="modal-content bg-warning">
+          <div class="modal-header text-center">
+            <h5 class="modal-title text-center">Welcome to ScoreBoard</h5>
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title text-center">
+                  <h5>Please Enter the details..!</h5>
+                </div>
+              </div>
+              <div class="card-body text-justify">
+                <div class="row">
+                  <div class="col-md-4">
+                    <h5>LeagueName</h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h5>
+                      <input type="text" ng-model="bowl.leagueName">
+                    </h5>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <h5>Max Overs : </h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h6>
+                      <input type="number" ng-model="bowl.maxOvers">
+                    </h6>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4"><h6>Extras :</h6></div>
+                  <div class="col-md-4">
+                    <h6>
+                      <input type="checkbox" value="wide" ng-model="bowl.hasWide"> Wide<br>
+                      <input type="checkbox" value="noBall" ng-model="bowl.hasNoBall"> No-Ball<br>
+                      <input type="checkbox" value="byes" ng-model="bowl.hasBye"> Byes<br>
+                      <input type="checkbox" value="legByes" ng-model="bowl.hasLegBye"> Leg Byes<br>
+                    </h6>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6>Team A: </h6>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" ng-model="bowl.teamAName">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="checkbox" value="defaultTeamA" ng-model="bowl.defaultTeamA"> Default<br>
                   </div>
                 </div>
-                <div class="card-body text-justify">
-                    <h5>League Name : <input type="text" ng-model="bowl.leagueName"> </h5>
-                    <h6>Format(Max Overs) : <input type="number" ng-model="bowl.formatName"> </h6>
-                    <h6>Format(Max Overs) : <input type="number" ng-model="bowl.formatName"> </h6>
+                <br>
+                <div class="row">
+                  <div class="col-md-3">
+                    <h6>Team B: </h6>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" ng-model="bowl.teamBName">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="checkbox" value="defaultTeamB" ng-model="bowl.defaultTeamB"> Default<br>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-info btn-block" data-dismiss="modal">Close</button>
+          </div>
+          <div class="row" ng-show="bowl.showSetDetails">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <button class="btn-primary btn-block" ng-click="bowl.setDetails(bowl.maxOvers,bowl.hasWide,bowl.hasNoBall,bowl.hasBye,bowl.hasLegBye,bowl.defaultTeamA,bowl.defaultTeamB)">Set the details</button>
             </div>
-            </div>
-        </div>
+            <div class="col-md-4"></div>
+          </div>
+          <div class="modal-footer" >
+            <button class="btn btn-info btn-block" data-dismiss="modal" ng-click="bowl.startScoreBoard()">Start the Game</button>
+          </div>
+          </div>
       </div>
+    </div>
+
+    <div class="container" ng-hide="bowl.showStart">
+<!-- BattingCtrl starts here -->
+    <div ng-controller="BattingCtrl as bat">
 
         <div class="row py-5">
           <div class="col-md-3"></div>
           <div class="col-md-6">
             <h3 class="text-center">{{bowl.leagueName}}
-              <small class="text-muted">({{bowl.formatName}} Overs)</small>
+              <small class="text-muted">({{bowl.maxOvers}} Overs)</small>
             </h3>
           </div>
           <div class="col-md-3"></div>
@@ -100,7 +152,7 @@
           <div class="col-md-6">
             <div class="card">
               <div class="card-header bg-primary">
-                <h4 class="text-center">India</h4>
+                <h4 class="text-center">{{bowl.teamAName}}</h4>
               </div>
               <div class="card-body">
 <!-- TeamACtrl starts here -->
@@ -131,7 +183,7 @@
           <div class="col-md-6">
             <div class="card">
               <div class="card-header bg-warning">
-                <h4 class="text-center">Australia</h4>
+                <h4 class="text-center">{{bowl.teamBName}}</h4>
               </div>
               <div class="card-body">
 <!-- TeamBCtrl starts here -->
@@ -175,7 +227,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <h5> Striker:</h5>
-                    <select id="selectStriker" class="d-inline" ng-model="bat.batsman" ng-options="test as test.name disable when test.disabled==true for test in bat.myTeamA">
+                    <select id="selectStriker" class="d-inline" ng-model="bat.batsman" ng-options="test as test.name disable when test.available == false for test in bat.myTeamA">
                       <!-- <option value="">Select</option>
                       <option value={{bat.myTeamA[0].name}} ng-hide="">{{bat.myTeamA[0].name}}</option>
                       <option value={{bat.myTeamA[1].name}} ng-hide="">{{bat.myTeamA[1].name}}</option>
@@ -193,7 +245,7 @@
                   </div>
                   <div class="col-md-6">
                     <h5> Non-Striker:</h5>
-                    <select id="selectNonStriker" class="d-inline" ng-model="bat.batsman2" ng-options="test as test.name disable when test.disabled==true for test in bat.myTeamA">
+                    <select id="selectNonStriker" class="d-inline" ng-model="bat.batsman2" ng-options="test as test.name disable when test.available == false for test in bat.myTeamA">
                       <!-- <option value="">Select</option>
                       <option value={{bat.myTeamA[0].name}} ng-show="bat.isAvailableBatsman(bat.batsman1)">{{bat.myTeamA[0].name}}</option>
                       <option value={{bat.myTeamA[1].name}} ng-hide="bat.myTeamA[1].name == bat.batsman1">{{bat.myTeamA[1].name}}</option>
@@ -207,7 +259,7 @@
                       <option value={{bat.myTeamA[9].name}} ng-hide="bat.myTeamA[9].name == bat.batsman1">{{bat.myTeamA[9].name}}</option>
                       <option value={{bat.myTeamA[10].name}} ng-hide="bat.myTeamA[10].name == bat.batsman1">{{bat.myTeamA[10].name}}</option> -->
                     </select>
-                    <button class="btn btn-success btn-sm" ng-click="bat.nonStriker(bat.batsman2)">Ok</button>
+                    <button class="btn btn-success btn-sm" ng-click="bat.striker(bat.batsman2)">Ok</button>
                   </div>
                 </div>
               </div>
@@ -237,21 +289,34 @@
               </div>
               <div class="card-body">
                 <p>Select Next Batsman:</p>
-                <select id="selectStriker"  ng-model="bat.batsman">
-                  <option value="">Select</option>
-                  <option value={{bat.myTeamA[0].name}} ng-hide="bat.myTeamA[0].name == bat.currentbater">{{bat.myTeamA[0].name}}</option>
-                  <option value={{bat.myTeamA[1].name}} ng-hide="bat.myTeamA[1].name == bat.currentbater">{{bat.myTeamA[1].name}}</option>
-                  <option value={{bat.myTeamA[2].name}} ng-hide="bat.myTeamA[2].name == bat.currentbater">{{bat.myTeamA[2].name}}</option>
-                  <option value={{bat.myTeamA[3].name}} ng-hide="bat.myTeamA[3].name == bat.currentbater">{{bat.myTeamA[3].name}}</option>
-                  <option value={{bat.myTeamA[4].name}} ng-hide="bat.myTeamA[4].name == bat.currentbater">{{bat.myTeamA[4].name}}</option>
-                  <option value={{bat.myTeamA[5].name}} ng-hide="bat.myTeamA[5].name == bat.currentbater">{{bat.myTeamA[5].name}}</option>
-                  <option value={{bat.myTeamA[6].name}} ng-hide="bat.myTeamA[6].name == bat.currentbater">{{bat.myTeamA[6].name}}</option>
-                  <option value={{bat.myTeamA[7].name}} ng-hide="bat.myTeamA[7].name == bat.currentbater">{{bat.myTeamA[7].name}}</option>
-                  <option value={{bat.myTeamA[8].name}} ng-hide="bat.myTeamA[8].name == bat.currentbater">{{bat.myTeamA[8].name}}</option>
-                  <option value={{bat.myTeamA[9].name}} ng-hide="bat.myTeamA[9].name == bat.currentbater">{{bat.myTeamA[9].name}}</option>
-                  <option value={{bat.myTeamA[10].name}} ng-hide="bat.myTeamA[10].name == bat.currentbater">{{bat.myTeamA[10].name}}</option>
-                </select>
-                <button class="btn btn-success btn-sm" ng-click="bat.setNextBatsman(bat.batsman);bowl.setNextBatsmanInd()">Ok</button>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <select id="selectStriker"  ng-model="bat.nextBatsman" ng-options="test as test.name disable when test.available == false for test in bat.myTeamA">
+                      <!-- <option value="">Select</option>
+                      <option value={{bat.myTeamA[0].name}} ng-disabled="!bat.myTeamA[0].available">{{bat.myTeamA[0].name}}</option>
+                      <option value={{bat.myTeamA[1].name}} ng-disabled="!bat.myTeamA[1].available">{{bat.myTeamA[1].name}}</option>
+                      <option value={{bat.myTeamA[2].name}} ng-disabled="!bat.myTeamA[2].available">{{bat.myTeamA[2].name}}</option>
+                      <option value={{bat.myTeamA[3].name}} ng-disabled="!bat.myTeamA[3].available">{{bat.myTeamA[3].name}}</option>
+                      <option value={{bat.myTeamA[4].name}} ng-disabled="!bat.myTeamA[4].available">{{bat.myTeamA[4].name}}</option>
+                      <option value={{bat.myTeamA[5].name}} ng-disabled="!bat.myTeamA[5].available">{{bat.myTeamA[5].name}}</option>
+                      <option value={{bat.myTeamA[6].name}} ng-disabled="!bat.myTeamA[6].available">{{bat.myTeamA[6].name}}</option>
+                      <option value={{bat.myTeamA[7].name}} ng-disabled="!bat.myTeamA[7].available">{{bat.myTeamA[7].name}}</option>
+                      <option value={{bat.myTeamA[8].name}} ng-disabled="!bat.myTeamA[8].available">{{bat.myTeamA[8].name}}</option>
+                      <option value={{bat.myTeamA[9].name}} ng-disabled="!bat.myTeamA[9].available">{{bat.myTeamA[9].name}}</option>
+                      <option value={{bat.myTeamA[10].name}} ng-disabled="!bat.myTeamA[10].available">{{bat.myTeamA[10].name}}</option> -->
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="checkbox" value="wide" ng-model="bowl.hasWide">Strike<br>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="btn btn-success btn-sm" ng-click="bat.striker(bat.nextBatsman);bowl.setNextBatsmanInd()">Ok</button>
+                  </div>
+                </div>
+
+
+
               </div>
             </div>
 
@@ -427,11 +492,11 @@
                 <div class="card-body">
                   <h5 class="d-inline">This Over:</h5>
                     <select class="d-inline" ng-model="bowl.extraRun">
-                      <option value="" disabled>Extra's</option>
-                      <option value="Wd">Wide</option>
-                      <option value="B">Bye</option>
-                      <option value="LB">Leg Bye</option>
-                      <option value="NB">No Ball</option>
+                      <option value="" ng-disabled>Extra's</option>
+                      <option value="Wd" ng-disabled="!bowl.hasWide">Wide</option>
+                      <option value="B" ng-disabled="!bowl.hasByes">Bye</option>
+                      <option value="LB" ng-disabled="!bowl.hasLegBye">Leg Bye</option>
+                      <option value="NB" ng-disabled="!bowl.hasNoBall">No Ball</option>
                       <option value="Out">Wicket</option>
                     </select>
 
@@ -640,6 +705,7 @@
         <hr>
       <p class="text-center text-muted" >Copy rights reserved</p>
     </div>
+  </div>
 <!-- BowlingCtrl starts here -->
 </body>
 
