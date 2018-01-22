@@ -2,8 +2,9 @@
   var app = angular.module("scoreBoard");
   app.controller("TeamBCtrl", TeamBCtrl);
 
-  function TeamBCtrl(TeamBSvc){
-      this.myTeam = TeamBSvc.myTeam;
+  function TeamBCtrl(TeamSvc){
+      // this.myTeam = TeamBSvc.myTeam;
+      this.myTeam = TeamSvc.myTeamB;
       // console.log('TeamB : '+this.myTeam[0].name);
       this.limitValue = 2 ;
       this.showMoreLink = true;

@@ -2,13 +2,15 @@
   var app = angular.module("scoreBoard");
   app.controller("BattingCtrl", BattingCtrl);
 
-  function BattingCtrl(TeamASvc) {
+  function BattingCtrl(TeamSvc) {
       // console.log("Please select a Striker...!");
       // this.striker="";
       // console.log("Please select a Non-Striker...!");
       // this.nonStriker="";
-      this.myTeamA = TeamASvc.myTeam;
-      this.notAvailableBatsman = [];
+      this.myTeamA = TeamSvc.myTeamA;
+      // this.myTeamA = TeamASvc.myTeam;
+      this.availableBatsman = TeamSvc.myTeamA;
+      // this.availableBatsman = TeamASvc.myTeam;
 
       this.striker = function (batsman){
         this.batsman1 = batsman;
@@ -16,6 +18,8 @@
         this.notAvailableBatsman.push({name: this.batsman1, disabled: true});
         console.log('Outed: '+this.notAvailableBatsman[2].name +" " +this.notAvailableBatsman[2].disabled);
         // this.disableStriker = true ;
+
+
       }
       this.nonStriker = function (batsman){
         this.batsman2 = batsman;

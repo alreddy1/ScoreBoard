@@ -2,7 +2,7 @@
   var app = angular.module("scoreBoard");
   app.controller("BowlingCtrl", BowlingCtrl);
 
-  function BowlingCtrl(TeamBSvc, BowlingSvc) {
+  function BowlingCtrl(TeamSvc, BowlingSvc) {
 
       this.bowler ="";
       this.totalScore = 0;
@@ -17,9 +17,15 @@
       this.showBowler = true;
       this.showOpeningBatsman = true;
       this.showNextBatsman = false;
-      this.myTeamB = TeamBSvc.myTeam;
+      // this.myTeamB = TeamBSvc.myTeam;
+      this.myTeamB = TeamSvc.myTeamB;
       this.bowlerStatsDetails = BowlingSvc.bowlerDetails();
 
+      this.showStart = true;
+      this.start = function(){
+        console.log('start clicked');
+        this.showStart = false;
+      }
       this.showBatsman = function(){
         this.showOpeningBatsman = false;
       }
