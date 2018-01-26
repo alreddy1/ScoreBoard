@@ -10,7 +10,7 @@
                     {name: 'V Kohli', available : true},
                     {name: 'G Gambhir', available : true},
                     {name: 'Y Sing', available : true},
-                    {name: 'M Dhoni (C & Wk)', available : true},
+                    {name: 'M Dhoni', available : true},
                     {name: 'K Dev', available : true},
                     {name: 'A Kumble', available : true},
                     {name: 'H Sing', available : true},
@@ -18,8 +18,8 @@
                     {name: 'Z Khan', available : true}
                   ];
     this.myTeamB = [ {name: 'M Hayden', available : true},
-                    {name: 'G Christ (Wk)', available : true},
-                    {name: 'R Ponting (C)', available : true},
+                    {name: 'G Christ', available : true},
+                    {name: 'R Ponting', available : true},
                     {name: 'M Clark', available : true},
                     {name: 'M Hussey', available : true},
                     {name: 'M Bevan', available : true},
