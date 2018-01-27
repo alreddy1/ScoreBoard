@@ -2,7 +2,6 @@
   var app = angular.module("scoreBoard");
   app.controller("BowlingCtrl", BowlingCtrl);
 
-
   function BowlingCtrl(TeamSvc, BowlingSvc) {
 
       this.bowler ="";
@@ -29,10 +28,45 @@
 
       this.striker_temp = "";
       this.nonStriker_temp = "";
-      this.setBatsman = function (batsman, onStrike){
+      this.setBatsman = function (batsman, onStrike, outBatsman){
 
         this.batsman = batsman;
         this.isOnStrike = onStrike;
+        this.batsmanWhoGotOut = outBatsman;
+
+        // if(typeof(this.batsmanWhoGotOut) !== "undefined"){
+          this.tableColLenght = document.getElementById('scoreBoardTeamADetails').getElementsByClassName('player-name').length;
+          for(j=0; j < this.tableColLenght; j++){
+            if(this.batsmanWhoGotOut === this.myTeamA[j].name ) {
+            this.playerIndex = this.myTeamA.indexOf(this.batsmanWhoGotOut);
+            console.log('player index : '+this.playerIndex);
+            }
+          }
+
+          if(this.batsmanWhoGotOut === this.batsman_1){
+              //Do log it somewhere and clear this section
+
+              document.getElementById('scoreBoardTeamADetails').getElementsByClassName('player-runs')[0].innerHTML = 0 ;
+
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-runs')[0].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-balls')[0].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-fours')[0].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-sixes')[0].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-strikeRate')[0].innerHTML = 0 ;
+          }else if (this.batsmanWhoGotOut === this.batsman_2){
+            //Do log it somewhere and clear this section
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-runs')[1].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-balls')[1].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-fours')[1].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-sixes')[1].innerHTML = 0 ;
+                document.getElementById('batsmanScoreDetails').getElementsByClassName('player-strikeRate')[1].innerHTML = 0 ;
+          }else{
+            console.log('Name does not match');
+          }
+
+
+
+
         this.index = this.availableBatsman.indexOf(this.batsman);
         this.availableBatsman[this.index].available = false;
         if(this.isOnStrike === true){
@@ -51,7 +85,10 @@
         this.foursHit = 0;
         this.sixesHit = 0;
         this.strikeRate = 0;
-        console.log('Openers are ready..!');
+
+
+        //this will be useful when you are selecting next batsman
+        this.showNextBatsman = false;
 
       }
 
@@ -93,7 +130,12 @@
 
 
             }else{
-              // console.log('continue');
+              //this info will be used when the batsman gets out
+              this.runsScoredByPlayer_2 = document.getElementById('batsmanScoreDetails').getElementsByClassName('player-runs')[i].innerHTML;
+              this.ballsFacedByPlayer_2 =  document.getElementById('batsmanScoreDetails').getElementsByClassName('player-balls')[i].innerHTML;
+              this.foursHitByPlayer_2 =  document.getElementById('batsmanScoreDetails').getElementsByClassName('player-fours')[i].innerHTML;
+              this.sixesHitByPlayer_2 =  document.getElementById('batsmanScoreDetails').getElementsByClassName('player-sixes')[i].innerHTML;
+
             }
 
           }
@@ -123,12 +165,11 @@
 
       }
 
-
-
       this.calculateStrikeRate = function (runs, balls){
-        this.strikeRateAfterThisDelivery = runs *100 / balls ;
-        this.strikeRateAfterThisDelivery = this.strikeRateAfterThisDelivery.toFixed(2);
-        // console.log('strikeRate : ' + this.strikeRate);
+
+          this.strikeRateAfterThisDelivery = runs *100 / balls ;
+          this.strikeRateAfterThisDelivery = this.strikeRateAfterThisDelivery.toFixed(2);
+
       };
 
 
@@ -141,33 +182,22 @@
         this.maxOvers = maxOvers;
         console.log('maxOvers : '+this.maxOvers);
         this.hasWide = hasWide;
-        // console.log('Wide : '+this.hasWide);
         this.hasNoBall = hasNoBall;
-        // console.log('hasNoBall : '+this.hasNoBall);
         this.hasBye = hasBye;
-        // console.log('hasBye : '+this.hasBye);
         this.hasLegBye = hasLegBye;
-        // console.log('hasLegBye : '+this.hasLegBye);
         //set Default Team if not entered.
 
         this.showSetDetails = false;
       }
       this.startScoreBoard = function(){
-        // console.log('Set Details clicked');
         this.showStart = false;
       }
       this.showBatsman = function(){
         this.showOpeningBatsman = false;
-        // console.log('Next batsman ind: '+this.showNextBatsman);
-      }
-
-      this.setNextBatsmanInd = function (){
-        this.showNextBatsman = false;
       }
 
       this.changeBowler = function (bowler){
         this.bowler = bowler;
-        // console.log('New Bowler : '+this.bowler);
         this.currentBowler = this.bowler;
         this.showBowler = false;
         this.currentOverDetails = true;
@@ -175,7 +205,6 @@
 
 
       this.overCompleted = function (){
-          // console.log('Please select another bowler..!');
           this.bowler=!this.bowler;
           this.ballCount = 0;
           this.showOver = false;
@@ -185,16 +214,10 @@
 
       this.overDetails = function(runs, extras){
 
-        // console.log('strikerrr'+this.striker);
         this.runsScored = parseInt(runs);
-        // console.log("overDetails clicked..!: "+this.runsScored) ;
         this.extraRun = extras;
 
-        // this.getBatsmanScoreDetails();
-
         this.getBatsmanScoreDetails(this.runsScored, this.extraRun);
-        // this.batsmanDetails(this.runsScored, this.extraRun);
-
 
         if (this.extraRun === 'NB') {
             this.runConcededOnNoBall =this.runsScored + 1;
@@ -202,14 +225,12 @@
             // console.log("Runs scored with No-Ball!--> runs : " +this.runConcededOnNoBall);
             this.totalScore += this.runConcededOnNoBall;
             // console.log("total score :" +this.totalScore);
-            // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extraRun === 'Wd') {
           this.runConcededOnWideBall =this.runsScored + 1;
           this.runsScoredInThisOver.push(this.runConcededOnWideBall);
             // console.log("Runs scored on Wide delivery! --> extras :" +this.runConcededOnWideBall);
             this.totalScore += this.runConcededOnWideBall;
             // console.log("total score :" +this.totalScore);
-            // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extraRun === 'LB') {
             this.runConcededWithLegByes =this.runsScored;
             this.runsScoredInThisOver.push(this.runConcededWithLegByes);
@@ -217,7 +238,6 @@
             this.totalScore += this.runConcededWithLegByes;
             // console.log("total score :" +this.totalScore);
             this.ballCount += 0.1;
-            // console.log('Ball Count : ' +this.ballCount );
         }else if (this.extraRun === 'B') {
           this.runConcededWithByes =this.runsScored;
           this.runsScoredInThisOver.push(this.runConcededWithByes);
@@ -225,7 +245,6 @@
           this.totalScore += this.runConcededWithByes;
           // console.log("total score :" +this.totalScore);
           this.ballCount += 0.1;
-          // console.log('Ball Count : ' +this.ballCount );
         }else if (this.extraRun === 'Out') {
           this.runConceded = this.runsScored;
           this.runsScoredInThisOver.push(this.runConceded);
@@ -233,9 +252,10 @@
           this.totalScore += this.runConceded;
           // console.log("total score :" +this.totalScore);
           this.ballCount += 0.1;
-          // console.log('Ball Count : ' +this.ballCount );
           this.wicketsFallen += 1;
-          // console.log('Please select another batsman..!');
+          //get hold of batsman details before selecting next batsman
+          this.getBatsmanScoreDetails(this.runsScored, this.extraRun);
+
           this.showNextBatsman = true;
 
         }else {
@@ -323,54 +343,23 @@
 
         if (this.extrasGivenOnThisDelivery === 'NB') {
             this.runGivenOnNoBall = this.runsScoredOnThisDelivery + 1;
-            // this.runsScoredInThisOver.push(this.runConcededOnNoBall);
-            // console.log("Runs scored with No-Ball!--> runs : " +this.runGivenOnNoBall);
             this.totalScoreInThisOver += this.runGivenOnNoBall;
-            // console.log("total score :" +this.totalScoreInThisOver);
-            // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extrasGivenOnThisDelivery === 'Wd') {
           this.runGivenOnWideBall =this.runsScoredOnThisDelivery + 1;
-          // this.runsScoredInThisOver.push(this.runConcededOnWideBall);
-            // console.log("Runs scored on Wide delivery! --> extras :" +this.runGivenOnWideBall);
             this.totalScoreInThisOver += this.runGivenOnWideBall;
-            // console.log("total score :" +this.totalScoreInThisOver);
-            // console.log('Ball Count : ' +this.ballCount );
         } else if (this.extrasGivenOnThisDelivery === 'LB') {
             this.runGivenWithLegByes =this.runsScoredOnThisDelivery;
-            // this.runsScoredInThisOver.push(this.runConcededWithLegByes);
-            // console.log("Runs scored runConcededWithLegByes()! --> extras :" +this.runConcededWithLegByes);
             this.totalScoreInThisOver += this.runConcededWithLegByes;
-            // console.log("total score :" +this.totalScoreInThisOver);
-            // this.ballCount += 0.1;
-            // console.log('Ball Count : ' +this.ballCount );
         }else if (this.extrasGivenOnThisDelivery === 'B') {
           this.runConcededWithByes =this.runsScoredOnThisDelivery;
-          // this.runsScoredInThisOver.push(this.runConcededWithByes);
-          // console.log("Runs scored runConcededWithByes()! --> extras :" +this.runConcededWithByes);
           this.totalScoreInThisOver += this.runConcededWithByes;
-          // console.log("total score :" +this.totalScoreInThisOver);
-          // this.ballCount += 0.1;
-          // console.log('Ball Count : ' +this.ballCount );
         }else if (this.extrasGivenOnThisDelivery === 'Out') {
           this.runGivenOnThisDelivery = this.runsScoredOnThisDelivery;
-          // this.runsScoredInThisOver.push(this.runConceded);
-          // console.log("Runs scored runGivenOnThisDelivery()! --> extras :" +this.runGivenOnThisDelivery);
           this.totalScoreInThisOver += this.runGivenOnThisDelivery;
           console.log("total score :" +this.totalScoreInThisOver);
-          // this.ballCount += 0.1;
-          // console.log('Ball Count : ' +this.ballCount );
-          // this.wicketsFallen += 1;
-          // console.log('Please select another batsman..!');
-          // this.selectBatsman();
         }else {
-          // console.log('runsScoredOnThisDelivery '+this.runsScoredOnThisDelivery);
-          // console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
           this.totalScoreInThisOver += this.runsScoredOnThisDelivery;
           console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
-          // this.runsScoredInThisOver.push(this.runsScored);
-          // console.log("Runs scored --> Runs :" +this.totalScoreInThisOver);
-          // this.ballCount += 0.1;
-          // console.log('Ball Count : ' +this.ballCount );
         }
         this.average(this.totalScoreInThisOver, this.oversCompletted);
       }

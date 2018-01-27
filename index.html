@@ -156,7 +156,7 @@
               <div class="card-body">
 <!-- TeamACtrl starts here -->
                 <div class="" ng-controller="TeamACtrl as teamA">
-                  <table class="table table-sm table-hover">
+                  <table class="table table-sm table-hover" id="scoreBoardTeamADetails">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -167,8 +167,8 @@
                     <tbody ng-repeat="player in  teamA.myTeam | limitTo : teamA.limitValue">
                       <tr>
                         <td>{{$index+1}}</td>
-                        <td>{{player.name}}</td>
-                        <td></td>
+                        <td class="player-name">{{player.name}}</td>
+                        <td class="player-runs"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -187,7 +187,7 @@
               <div class="card-body">
 <!-- TeamBCtrl starts here -->
                 <div class="" ng-controller="TeamBCtrl as teamB">
-                  <table class="table table-sm table-hover">
+                  <table class="table table-sm table-hover" id="scoreBoardTeamBDetails">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -198,8 +198,8 @@
                     <tbody ng-repeat="player in  teamB.myTeam | limitTo : teamB.limitValue">
                       <tr>
                         <td>{{$index+1}}</td>
-                        <td>{{player.name}}</td>
-                        <td></td>
+                        <td class="player-name">{{player.name}}</td>
+                        <td class="player-runs"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -230,7 +230,7 @@
                       <h5> Striker:</h5>
                       <div class="row">
                         <div class="col-md-6">
-                          <select id="selectStriker" class="d-inline" ng-model="bowl.batsman" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA"> </select>
+                          <select class="d-inline" ng-model="bowl.batsman" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA"> </select>
                         </div>
                         <div class="col-md-4">
                           <input type="checkbox" value="onStrike" ng-disabled="bowl.nonStrike" ng-model="bowl.onStrike">Strike<br>
@@ -249,7 +249,7 @@
                       <h5> Non-Striker:</h5>
                       <div class="row">
                         <div class="col-md-6">
-                          <select id="selectNonStriker" class="d-inline" ng-model="bowl.batsman2" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA"> </select>
+                          <select class="d-inline" ng-model="bowl.batsman2" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA"> </select>
                         </div>
                         <div class="col-md-4">
                           <input type="checkbox" value="onStrike" ng-disabled="bowl.onStrike" ng-model="bowl.nonStrike">Strike<br>
@@ -277,42 +277,44 @@
           </div>
           <div class="col-md-2"></div>
         </div>
-        <hr>
+      </div>
+      <hr>
 
 
-        <div class="row" ng-show="bowl.showNextBatsman">
-          <div class="col-md-4"></div>
-          <div class="col-md-4">
-            <br>
-            <div class="card">
-              <div class="card-header bg-success">
-                <h5 class="text-center text-white">Select Next Batsman</h5>
-              </div>
-              <div class="card-body">
-                <p>Select Next Batsman:</p>
+      <div class="row" ng-if="bowl.showNextBatsman">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <br>
+          <div class="card">
+            <div class="card-header bg-success">
+              <h5 class="text-center text-white">Select Next Batsman</h5>
+            </div>
+            <div class="card-body">
+              <p>Select the batsman who got out..!</p>
+              <select class="d-inline" ng-model="bowl.batsmanWhoGotOut" ng-options="test as test.name disable when test.available == true for test in bowl.myTeamA"> </select>
+              <!-- <select id="selectBowler" class="d-inline" ng-model="bowl.batsmanWhoGotOut">
+              	<option value="">Select</option>
+              	<option value={{bowl.batsman_1}} >{{bowl.batsman_1}}</option>
+              	<option value={{bowl.batsman_2}} >{{bowl.batsman_2}}</option>
+              </select> -->
 
-                <div class="row">
-                  <div class="col-md-5">
-                    <select id="selectStriker"  ng-model="bowl.nextBatsman" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA">
-                    </select>
-                  </div>
-                  <div class="col-md-4">
-                    <input type="checkbox" value="onStrike" ng-model="bowl.onStrike">Strike<br>
-                  </div>
-                  <div class="col-md-3">
-                    <button class="btn btn-success btn-sm" ng-click="bowl.setBatsman(bowl.nextBatsman, bowl.onStrike);bowl.setNextBatsmanInd()">Ok</button>
-                  </div>
+              <p>Select Next Batsman:</p>
+              <div class="row">
+                <div class="col-md-5">
+                  <select ng-model="bowl.nextBatsman" ng-options="test as test.name disable when test.available == false for test in bowl.myTeamA">
+                  </select>
                 </div>
-
-
-
+                <div class="col-md-4">
+                  <input type="checkbox" ng-model="bowl.onStrike">Strike<br>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-success btn-sm" ng-click="bowl.setBatsman(bowl.nextBatsman, bowl.onStrike, bowl.batsmanWhoGotOut)">Ok</button>
+                </div>
               </div>
             </div>
-
           </div>
-          <div class="col-md-4"></div>
         </div>
-
+        <div class="col-md-4"></div>
       </div>
 
       <hr>
@@ -387,7 +389,6 @@
       </div>
 
       <hr>
-
 
       <div ng-show="bowl.currentOverDetails">
           <div class="row">
@@ -485,158 +486,140 @@
         <div class="col-md-4"></div>
       </div>
 
-      <!-- <table id="tableData" name="tableData">
-      	<tr>
-      		<td id="TD">10</td>
-      		<td id="TD">4</td>
-      		<td id="TD">7</td>
-      	</tr>
-      	<tr>
-      		<td id="TD">8</td>
-      		<td id="TD">5</td>
-      		<td id="TD">2</td>
-      	</tr>
-      	<tr>
-      		<td id="TD">3</td>
-      		<td id="TD">1</td>
-      		<td id="TD">6</td>
-      	</tr>
-      </table> -->
-
       <hr>
       <!-- <div class="container" id="bowing-details"> -->
-        <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header bg-success">
-                <h4 class="text-center text-white">Bowling</h4>
-              </div>
-              <div class="card-body">
-                <table class="table tabel-sm table-hover" id="bowlerInfo">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Bowler</th>
-                      <th>Overs</th>
-                      <th>Maidens</th>
-                      <th>Runs</th>
-                      <th>Wickets</th>
-                      <th>RR</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>{{bowl.myTeamB[10].name}}</td>
-                      <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>{{bowl.myTeamB[9].name}}</td>
-                      <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>{{bowl.myTeamB[8].name}}</td>
-                      <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>{{bowl.myTeamB[7].name}}</td>
-                      <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>{{bowl.myTeamB[6].name}}</td>
-                      <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>{{bowl.myTeamB[5].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>{{bowl.myTeamB[4].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>{{bowl.myTeamB[3].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>{{bowl.myTeamB[2].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>{{bowl.myTeamB[1].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                    <tr>
-                      <td>11</td>
-                      <td>{{bowl.myTeamB[0].name}}</td>
-                      <!-- <td>{{bowl.oversCompletted}}</td>
-                      <td>{{bowl.maiden}}</td>
-                      <td>{{bowl.totalScoreInThisOver}}</td>
-                      <td>{{bowl.wicketsFallen}}</td>
-                      <td>{{bowl.avg}}</td> -->
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header bg-success">
+              <h4 class="text-center text-white">Bowling</h4>
+            </div>
+            <div class="card-body">
+              <table class="table tabel-sm table-hover" id="bowlerInfo">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Bowler</th>
+                    <th>Overs</th>
+                    <th>Maidens</th>
+                    <th>Runs</th>
+                    <th>Wickets</th>
+                    <th>RR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>{{bowl.myTeamB[10].name}}</td>
+                    <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>{{bowl.myTeamB[9].name}}</td>
+                    <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>{{bowl.myTeamB[8].name}}</td>
+                    <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>{{bowl.myTeamB[7].name}}</td>
+                    <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>{{bowl.myTeamB[6].name}}</td>
+                    <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>{{bowl.myTeamB[5].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>{{bowl.myTeamB[4].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>{{bowl.myTeamB[3].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>{{bowl.myTeamB[2].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>{{bowl.myTeamB[1].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>{{bowl.myTeamB[0].name}}</td>
+                    <!-- <td>{{bowl.oversCompletted}}</td>
+                    <td>{{bowl.maiden}}</td>
+                    <td>{{bowl.totalScoreInThisOver}}</td>
+                    <td>{{bowl.wicketsFallen}}</td>
+                    <td>{{bowl.avg}}</td> -->
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <div class="col-md-2"></div>
         </div>
-        <hr>
+        <div class="col-md-2"></div>
+      </div>
+      <hr>
       <p class="text-center text-muted" >Copy rights reserved</p>
     </div>
   </div>
-<!-- BowlingCtrl starts here -->
+<!-- BowlingCtrl ends here -->
 </body>
 
 </html>
