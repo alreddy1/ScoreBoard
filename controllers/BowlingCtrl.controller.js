@@ -173,7 +173,7 @@
       };
 
 
-      this.bowlerStatsDetails = BowlingSvc.bowlerDetails();
+      // this.bowlerStatsDetails = BowlingSvc.bowlerDetails();
 
       this.showStart = true;
       this.showSetDetails = true;
@@ -254,7 +254,8 @@
           this.ballCount += 0.1;
           this.wicketsFallen += 1;
           //get hold of batsman details before selecting next batsman
-          this.getBatsmanScoreDetails(this.runsScored, this.extraRun);
+
+          // this.getBatsmanScoreDetails(this.runsScored, this.extraRun);
 
           this.showNextBatsman = true;
 
@@ -267,7 +268,9 @@
         }
 
 
-        this.overStas(this.runsScored, this.extraRun);
+        // this.overStas(this.runsScored, this.extraRun);
+        this.bowlerStatsDetails(this.runsScored, this.extraRun);
+
 
 
         if(localStorage.getItem('tasks') === null) {
@@ -306,8 +309,8 @@
         this.extraRun = "";
         this.runsScored = 0;
 
-        this.oversCompletted = this.oversCount + this.ballCount;
-        this.oversCompletted = this.oversCompletted.toFixed(1);
+        this.oversCompletted = (this.oversCount + this.ballCount).toFixed(1);
+        // this.oversCompletted = this.oversCompletted.toFixed(1);
 
         if(localStorage.getItem('ScoreDetails') === null) {
           this.scores = [];
@@ -336,31 +339,87 @@
         }
       }
 
+      this.oversBowled = 0;
+      this.bowlerStatsDetails = function(runs, extras){
+
+        this.runsGiven = runs ;
+        this.extrasGiven = extras;
+
+        this.numbersName = document.getElementById('bowlerInfo').getElementsByClassName('bowler-name'),
+        this.numberOfBowlers = this.numbersName.length;
+
+          for(k=0; k < this.numberOfBowlers ; k++){
+            if(this.numbersName[k].innerHTML === this.bowler ){
+
+              this.oversBowledByThisBowler = document.getElementById('bowlerInfo').getElementsByClassName('bowler-overs')[k].innerHTML;
+              this.maidensBowledByThisBowler =  document.getElementById('bowlerInfo').getElementsByClassName('bowler-maiden')[k].innerHTML;
+              this.runsGivenByThisBowler =  document.getElementById('bowlerInfo').getElementsByClassName('bowler-runs')[k].innerHTML;
+              this.wicketsTakenByThisBowler =  document.getElementById('bowlerInfo').getElementsByClassName('bowler-wickets')[k].innerHTML;
+
+              this.overStas(this.runsGiven,
+                                  this.extrasGiven,
+                                  this.oversBowledByThisBowler,
+                                  this.maidensBowledByThisBowler,
+                                  this.runsGivenByThisBowler,
+                                  this.wicketsTakenByThisBowler
+                                );
+
+              // this.calculateRunRate(this.oversBowledByThisBowler, this.runsGivenByThisBowler);
+
+              document.getElementById('bowlerInfo').getElementsByClassName('bowler-overs')[k].innerHTML = this.oversBowledByThisBowler ;
+              document.getElementById('bowlerInfo').getElementsByClassName('bowler-maiden')[k].innerHTML = this.maidensBowledByThisBowler;
+              document.getElementById('bowlerInfo').getElementsByClassName('bowler-runs')[k].innerHTML = this.runsGivenByThisBowler;
+              document.getElementById('bowlerInfo').getElementsByClassName('bowler-wickets')[k].innerHTML = this.wicketsTakenByThisBowler;
+              //runrate -- chnage the variable
+              document.getElementById('bowlerInfo').getElementsByClassName('bowler-runrate')[k].innerHTML = this.wicketsTakenByThisBowler;
+
+            }
+        }
+      }
+
       this.totalScoreInThisOver = 0;
-      this.overStas = function(runs, extraRun){
+      this.overStas = function(runs, extraRun, overs, maiden, overRuns, wickets){
         this.runsScoredOnThisDelivery = parseInt(runs);
         this.extrasGivenOnThisDelivery = extraRun;
 
+        this.oversBowledByThisBowler = parseFloat(overs);
+        this.maidensBowledByThisBowler = parseInt(maiden);
+        this.runsGivenByThisBowler = parseInt(overRuns);
+        this.wicketsTakenByThisBowler = parseInt(wickets);
+
         if (this.extrasGivenOnThisDelivery === 'NB') {
             this.runGivenOnNoBall = this.runsScoredOnThisDelivery + 1;
-            this.totalScoreInThisOver += this.runGivenOnNoBall;
+            // this.totalScoreInThisOver += this.runGivenOnNoBall;
+            this.runsGivenByThisBowler += this.runGivenOnNoBall;
         } else if (this.extrasGivenOnThisDelivery === 'Wd') {
           this.runGivenOnWideBall =this.runsScoredOnThisDelivery + 1;
-            this.totalScoreInThisOver += this.runGivenOnWideBall;
+            // this.totalScoreInThisOver += this.runGivenOnWideBall;
+            this.runsGivenByThisBowler += this.runGivenOnWideBall;
         } else if (this.extrasGivenOnThisDelivery === 'LB') {
             this.runGivenWithLegByes =this.runsScoredOnThisDelivery;
-            this.totalScoreInThisOver += this.runConcededWithLegByes;
+            // this.totalScoreInThisOver += this.runConcededWithLegByes;
+            this.runsGivenByThisBowler += this.runConcededWithLegByes;
+
+            this.oversBowledByThisBowler += 0.1;
         }else if (this.extrasGivenOnThisDelivery === 'B') {
           this.runConcededWithByes =this.runsScoredOnThisDelivery;
-          this.totalScoreInThisOver += this.runConcededWithByes;
+          // this.totalScoreInThisOver += this.runConcededWithByes;
+          this.runsGivenByThisBowler += this.runConcededWithByes;
+          this.oversBowledByThisBowler += 0.1;
         }else if (this.extrasGivenOnThisDelivery === 'Out') {
           this.runGivenOnThisDelivery = this.runsScoredOnThisDelivery;
-          this.totalScoreInThisOver += this.runGivenOnThisDelivery;
+          // this.totalScoreInThisOver += this.runGivenOnThisDelivery;
+          this.runsGivenByThisBowler += this.runGivenOnThisDelivery;
           console.log("total score :" +this.totalScoreInThisOver);
+          this.oversBowledByThisBowler += 0.1;
+          this.wicketsTakenByThisBowler +=1;
         }else {
-          this.totalScoreInThisOver += this.runsScoredOnThisDelivery;
+          // this.totalScoreInThisOver += this.runsScoredOnThisDelivery;
+          this.runsGivenByThisBowler += this.runsScoredOnThisDelivery;
           console.log('totalScoreInThisOver '+this.totalScoreInThisOver);
+          this.oversBowledByThisBowler += 0.1;
         }
+        this.oversBowledByThisBowler = this.oversBowledByThisBowler.toFixed(1);
         this.average(this.totalScoreInThisOver, this.oversCompletted);
       }
 
